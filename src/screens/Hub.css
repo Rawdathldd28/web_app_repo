@@ -1,0 +1,52 @@
+/* Realisations.css */
+.realisations-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .realisations-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .realisation-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .realisation-item img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .realisation-item p {
+    text-align: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+    margin: 0;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .h1-pos {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 36px;
+    margin-left: -290px;
+  }
+   
+  .img {
+    position: absolute;
+    top: 70px; 
+    left: 870px;
+    width: 180px;
+  }
