@@ -31,12 +31,6 @@ import { GoDot } from "react-icons/go";
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Card, CardContent } from '@material-ui/core';
-import { LiaShoppingCartSolid } from "react-icons/lia";
-import { FaEuroSign } from "react-icons/fa";
-
-
-
 const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -88,34 +82,29 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  
   const [openInbox, setOpenInbox] = useState(false);
   const [openMail, setOpenMail] = useState(false);
   const [openDrafts, setOpenDrafts] = useState(false);
-
+  
   const handleInboxClick = () => {
     setOpenInbox(!openInbox);
   };
-
+  
   const handleMailClick = () => {
     setOpenMail(!openMail);
   };
-
+  
   const handleDraftsClick = () => {
     setOpenDrafts(!openDrafts);
-  };
-
-  const [showDashboardText, setShowDashboardText] = useState(false);
-  const handleDashboardClick = () => {
-    setShowDashboardText(!showDashboardText);
   };
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   return (
@@ -179,14 +168,6 @@ export default function PersistentDrawerLeft() {
           </Box>
         </Toolbar>
       </AppBar>
-      <div>
-        <h2>
-          Element
-        </h2>
-        <p>
-          Description
-        </p>
-      </div>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -210,7 +191,7 @@ export default function PersistentDrawerLeft() {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <DashboardIcon />
+                <DashboardIcon /> {/* Remplacez DashboardIcon par l'icône de votre choix */}
               </ListItemIcon>
               <ListItemText primary="Tableau de bord" />
             </ListItemButton>
@@ -360,34 +341,36 @@ export default function PersistentDrawerLeft() {
           </Collapse>
         </List>
       </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+      </Main>
       <div>
-        <Main open={open}>
-          <DrawerHeader />
-          <Card style={{ width: '180%', maxWidth: '400px', height: '200px', marginRight: 'auto', marginTop: '120px' }}>
-            <CardContent>
-            <h1><strong>Navette</strong>| ventes</h1>
-              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px'}} />
-              <h2 style={{ marginTop: '55px', marginLeft: '180px' }}>réservation(s)</h2>
-              <div style={{ display: 'inline-block', background: 'gray', padding: '10px', borderRadius: '50%', marginTop: '-85px'}}>
-                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white ', marginTop: '10px' }} />
-              </div>
-
-            </CardContent>
-          </Card>
-           <Card style={{ width: '180%', maxWidth: '400px', height: '200px', marginRight: 'auto', marginTop: '120px' }}>
-            <CardContent>
-            <h1><strong>Navette</strong>| ventes</h1>
-              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px'}} />
-              <h2 style={{ marginTop: '55px', marginLeft: '180px' }}>réservations)</h2>
-              <div style={{ display: 'inline-block', background: 'green', padding: '10px', borderRadius: '50%', marginTop: '-85px'}}>
-                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white', marginTop: '10px' }} />
-              </div>
-
-            </CardContent>
-          </Card>
-
-        </Main>
-      </div>
+            <Main open={open}>
+                <DrawerHeader />
+                <Card style={{ width: '80%', maxWidth: '500px', height: '200px', marginRight: 'auto' }}>
+                    <CardContent>
+                        {/* Contenu de votre carte */}
+                    </CardContent>
+                </Card>
+                <Card style={{ marginTop: '16px' }}>
+                    <CardContent>
+                        <Typography paragraph>
+                            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
+                            eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
+                            neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
+                            tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
+                            sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
+                            tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
+                            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
+                            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
+                            tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+                            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+                            posuere sollicitudin aliquam ultrices sagittis orci a.
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </Main>
+        </div>
     </Box>
   );
 }
