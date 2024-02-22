@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -22,7 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import logoImage from '../assets/logo.png'; // Import de l'image
 import { IoSearchSharp } from "react-icons/io5";
 import { Collapse } from '@mui/material';
-import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon, StarBorder as StarBorderIcon } from '@mui/icons-material';
+import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon, MarginRounded, StarBorder as StarBorderIcon } from '@mui/icons-material';
 import { TbBus } from "react-icons/tb";
 import { FaRegHandshake } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
@@ -31,7 +31,12 @@ import { GoDot } from "react-icons/go";
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useMediaQuery from '@mui/material/useMediaQuery';
-const drawerWidth = 300;
+import { Card, CardContent } from '@material-ui/core';
+import { LiaShoppingCartSolid } from "react-icons/lia";
+import { FaEuroSign } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+
+const drawerWidth = 270;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -82,34 +87,58 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  
+  const [scrolling, setScrolling] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+
   const [openInbox, setOpenInbox] = useState(false);
   const [openMail, setOpenMail] = useState(false);
   const [openDrafts, setOpenDrafts] = useState(false);
-  
+  const [openDraft, setOpenDraft] = useState(false);
+
   const handleInboxClick = () => {
     setOpenInbox(!openInbox);
   };
-  
+
   const handleMailClick = () => {
     setOpenMail(!openMail);
   };
-  
+
   const handleDraftsClick = () => {
     setOpenDrafts(!openDrafts);
   };
+
+  const handleDraftClick = () => {
+    setOpenDraft(!openDraft);
+  };
+
+  const [showDashboardText, setShowDashboardText] = useState(false);
+  const handleDashboardClick = () => {
+    setShowDashboardText(!showDashboardText);
+  };
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+    <div>
       <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white' }}>
         <Toolbar>
           <IconButton
@@ -175,6 +204,7 @@ export default function PersistentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            zIndex: 10,  // Définir le z-index du tiroir
           },
         }}
         variant="persistent"
@@ -191,7 +221,7 @@ export default function PersistentDrawerLeft() {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <DashboardIcon /> {/* Remplacez DashboardIcon par l'icône de votre choix */}
+                <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Tableau de bord" />
             </ListItemButton>
@@ -207,19 +237,26 @@ export default function PersistentDrawerLeft() {
           </ListItemButton>
           <Collapse in={openInbox} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/Form">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
                 <ListItemText primary="Reserver" />
               </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/Reservations">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
-                <ListItemText primary="Mes reservations" />
+                <ListItemText primary="Mes réservations" />
               </ListItemButton>
+
 
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
@@ -308,14 +345,14 @@ export default function PersistentDrawerLeft() {
 
         <Divider />
         <List>
-          <ListItemButton onClick={handleDraftsClick}>
+          <ListItemButton onClick={handleDraftClick}>
             <ListItemIcon>
               <FaCarAlt style={{ fontSize: 28 }} />
             </ListItemIcon>
             <ListItemText primary="Mise  a disposition (avec chauffeur)" />
-            {openDrafts ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {openDraft ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </ListItemButton>
-          <Collapse in={openDrafts} timeout="auto" unmountOnExit>
+          <Collapse in={openDraft} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
@@ -341,37 +378,7 @@ export default function PersistentDrawerLeft() {
           </Collapse>
         </List>
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-      </Main>
-      <div>
-            <Main open={open}>
-                <DrawerHeader />
-                <Card style={{ width: '80%', maxWidth: '500px', height: '200px', marginRight: 'auto' }}>
-                    <CardContent>
-                        {/* Contenu de votre carte */}
-                    </CardContent>
-                </Card>
-                <Card style={{ marginTop: '16px' }}>
-                    <CardContent>
-                        <Typography paragraph>
-                            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-                            eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-                            neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-                            tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-                            sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-                            tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-                            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-                            tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-                            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-                            posuere sollicitudin aliquam ultrices sagittis orci a.
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </Main>
-        </div>
-    </Box>
+    </div>
   );
 }
 

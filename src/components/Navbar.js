@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -22,7 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import logoImage from '../assets/logo.png'; // Import de l'image
 import { IoSearchSharp } from "react-icons/io5";
 import { Collapse } from '@mui/material';
-import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon, StarBorder as StarBorderIcon } from '@mui/icons-material';
+import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon, MarginRounded, StarBorder as StarBorderIcon } from '@mui/icons-material';
 import { TbBus } from "react-icons/tb";
 import { FaRegHandshake } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
@@ -34,10 +34,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Card, CardContent } from '@material-ui/core';
 import { LiaShoppingCartSolid } from "react-icons/lia";
 import { FaEuroSign } from "react-icons/fa";
-
-
-
-const drawerWidth = 300;
+import { Link } from 'react-router-dom';
+import { CgProfile } from "react-icons/cg";
+import { IoLogOut } from "react-icons/io5";
+import { Select, MenuItem } from '@mui/material';
+const drawerWidth = 270;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -88,11 +89,25 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const [scrolling, setScrolling] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
 
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -100,6 +115,7 @@ export default function PersistentDrawerLeft() {
   const [openInbox, setOpenInbox] = useState(false);
   const [openMail, setOpenMail] = useState(false);
   const [openDrafts, setOpenDrafts] = useState(false);
+  const [openDraft, setOpenDraft] = useState(false);
 
   const handleInboxClick = () => {
     setOpenInbox(!openInbox);
@@ -113,14 +129,28 @@ export default function PersistentDrawerLeft() {
     setOpenDrafts(!openDrafts);
   };
 
+  const handleDraftClick = () => {
+    setOpenDraft(!openDraft);
+  };
+
   const [showDashboardText, setShowDashboardText] = useState(false);
   const handleDashboardClick = () => {
     setShowDashboardText(!showDashboardText);
   };
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const cardMargin = scrolling && open ? '50px' : '0';
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+      <style>
+        {`
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #F6F9FF;
+        }
+      `}
+      </style>
       <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white' }}>
         <Toolbar>
           <IconButton
@@ -173,20 +203,34 @@ export default function PersistentDrawerLeft() {
             <Avatar>
               <AccountCircleIcon />
             </Avatar>
-            {!isMobile && (
-              <Typography variant="body1" style={{ color: 'black' }}>UserName </Typography>
-            )}
+
+            <div style={{ width: '10px' }}></div>
+
+            <Select
+              value="" // Ajoutez ici la valeur sélectionnée par défaut
+              displayEmpty
+              inputProps={{ 'aria-label': 'Username' }}
+              style={{ color: 'black', backgroundColor: 'transparent', border: '0px', }}
+            >
+              <MenuItem disabled value="">Username</MenuItem>
+              <MenuItem value="option1">
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <CgProfile style={{ marginRight: '8px', fontSize: '20px' }} />
+                  Profil
+                </div>
+              </MenuItem>
+              <MenuItem value="option2">
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <IoLogOut style={{ marginRight: '8px', fontSize: '20px' }} />
+                  Deconnexion
+                </div>
+              </MenuItem>
+
+            </Select>
           </Box>
         </Toolbar>
       </AppBar>
-      <div>
-        <h2>
-          Element
-        </h2>
-        <p>
-          Description
-        </p>
-      </div>
+
       <Drawer
         sx={{
           width: drawerWidth,
@@ -194,6 +238,7 @@ export default function PersistentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            zIndex: 10,  // Définir le z-index du tiroir
           },
         }}
         variant="persistent"
@@ -226,21 +271,30 @@ export default function PersistentDrawerLeft() {
           </ListItemButton>
           <Collapse in={openInbox} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/Form">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
                 <ListItemText primary="Reserver" />
               </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/Reservations">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
-                <ListItemText primary="Mes reservations" />
+                <ListItemText primary="Mes réservations" />
               </ListItemButton>
-
-              <ListItemButton sx={{ pl: 4 }}>
+            
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/Gestion">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
@@ -327,14 +381,14 @@ export default function PersistentDrawerLeft() {
 
         <Divider />
         <List>
-          <ListItemButton onClick={handleDraftsClick}>
+          <ListItemButton onClick={handleDraftClick}>
             <ListItemIcon>
               <FaCarAlt style={{ fontSize: 28 }} />
             </ListItemIcon>
             <ListItemText primary="Mise  a disposition (avec chauffeur)" />
-            {openDrafts ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {openDraft ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </ListItemButton>
-          <Collapse in={openDrafts} timeout="auto" unmountOnExit>
+          <Collapse in={openDraft} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
@@ -360,34 +414,60 @@ export default function PersistentDrawerLeft() {
           </Collapse>
         </List>
       </Drawer>
-      <div>
-        <Main open={open}>
+      <Main open={open}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', }}>
           <DrawerHeader />
-          <Card style={{ width: '180%', maxWidth: '400px', height: '200px', marginRight: 'auto', marginTop: '120px' }}>
+
+          {/* Première Card */}
+
+          <Card style={{ width: '100%', maxWidth: '400px', height: '200px', marginTop: '200px', zIndex: 1, marginLeft: '-40px' }}>
             <CardContent>
-            <h1><strong>Navette</strong>| ventes</h1>
-              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px'}} />
+              <h1><strong>Navette</strong>| ventes</h1>
+              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px' }} />
               <h2 style={{ marginTop: '55px', marginLeft: '180px' }}>réservation(s)</h2>
-              <div style={{ display: 'inline-block', background: 'gray', padding: '10px', borderRadius: '50%', marginTop: '-85px'}}>
-                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white ', marginTop: '10px' }} />
+              <div style={{ display: 'inline-block', background: 'gray', padding: '10px', borderRadius: '50%', marginTop: '-85px' }}>
+                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white' }} />
               </div>
-
             </CardContent>
           </Card>
-           <Card style={{ width: '180%', maxWidth: '400px', height: '200px', marginRight: 'auto', marginTop: '120px' }}>
+
+
+          <div style={{ width: '150px' }}></div>
+
+          <DrawerHeader />
+
+          {/* Deuxième Card */}
+
+          <Card style={{ width: '100%', maxWidth: '400px', height: '200px', marginTop: '200px', zIndex: 1 }}>
             <CardContent>
-            <h1><strong>Navette</strong>| ventes</h1>
-              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px'}} />
-              <h2 style={{ marginTop: '55px', marginLeft: '180px' }}>réservations)</h2>
-              <div style={{ display: 'inline-block', background: 'green', padding: '10px', borderRadius: '50%', marginTop: '-85px'}}>
-                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white', marginTop: '10px' }} />
+              <h1><strong>Navette</strong>| ventes</h1>
+              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px' }} />
+              <h2 style={{ marginTop: '55px', marginLeft: '180px' }}>réservation(s)</h2>
+              <div style={{ display: 'inline-block', background: 'green', padding: '10px', borderRadius: '50%', marginTop: '-85px' }}>
+                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white' }} />
               </div>
-
             </CardContent>
           </Card>
 
-        </Main>
-      </div>
+
+          <div style={{ width: '150px' }}></div>
+          <DrawerHeader />
+
+          {/* Troisieme Card */}
+
+          <Card style={{ width: '100%', maxWidth: '400px', height: '200px', marginTop: '200px', zIndex: 1 }}>
+            <CardContent>
+              <h1><strong>Navette</strong>| ventes</h1>
+              <FaEuroSign style={{ fontSize: 30, marginLeft: '100px', marginTop: '15px' }} />
+              <h2 style={{ marginTop: '55px', marginLeft: '180px' }}>réservation(s)</h2>
+              <div style={{ display: 'inline-block', background: 'blue', padding: '10px', borderRadius: '50%', marginTop: '-85px' }}>
+                <LiaShoppingCartSolid style={{ fontSize: 70, color: 'white' }} />
+              </div>
+            </CardContent>
+          </Card>
+
+        </div>
+      </Main>
     </Box>
   );
 }

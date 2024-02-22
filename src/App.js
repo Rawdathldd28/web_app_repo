@@ -1,21 +1,27 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
-//import Home from './screen/home.js';
-// import Projets from './screens/Projets';
-// import Rocket from './screens/Rocket';
-// import Hub from './screens/Hub';
+import Form from './components/Form';
+import Gestion from './components/Gestion'
+import Reservations from './components/Reservations'
+import Nvbar from './components/Nvbar'
 
 function App() {
   return (
     <>
-      <Navbar />
-      {/* <Router>
-          <Routes>
-            <Route path="/home" element={< Home />} />
-          </Routes>
-      </Router> */}
+      {/* <Nvbar /> */}
+      {/* <Form /> */}
+      {/* <Reservations /> */}
+      {/* <Gestion /> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={< Navbar />} />
+          <Route path="/Reservations" element={< Reservations />} />
+          <Route path="/Form" element={< Form />} />
+          <Route path="/Gestion" element={< Gestion />} />
+        </Routes>
+      </Router>
     </>
   );
 };

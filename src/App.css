@@ -7,3 +7,35 @@
   height: 40vmin;
   pointer-events: none;
 }
+
+.card-container {
+  flex-grow: 1;
+  max-width: 400px;
+  margin-top: 100px;
+  /* z-index: 1;   */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.drawer-open {
+  margin-left: 240px; /* Ajoutez la largeur de votre Drawer ici */
+  transition: margin-left 0.3s ease-in-out; /* Ajoutez une transition pour un effet plus fluide */
+}
+
+.drawer-closed {
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
