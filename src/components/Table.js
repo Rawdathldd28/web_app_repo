@@ -332,9 +332,7 @@ export default function PersistentDrawerLeft() {
                                 <ListItemText primary="Reservations payees" />
                             </ListItemButton>
 
-                            <ListItemButton sx={{ pl: 4 }}
-                                component={Link}
-                                to="/Table">
+                            <ListItemButton sx={{ pl: 4 }}>
                                 <ListItemIcon>
                                     <GoDot />
                                 </ListItemIcon>
@@ -476,13 +474,37 @@ export default function PersistentDrawerLeft() {
                                     padding: '0.3em',  // Ajustez le remplissage pour les écrans de taille spécifique
                                 },
                             }}>
-                                <strong>MES RESERVATIONS DE NAVETTES D'AEROPORT</strong>
+                                <strong>LISTE DES TARIFS DES TRANSFERTS D'AEROPORT</strong>
                             </p>
 
                             <div style={{ width: '20px' }}></div>
+                            <p
+                                style={{
+                                    fontWeight: 'bold',
+                                    fontSize: '10',  // Ajustez la taille de la police pour les écrans plus petits
+                                    textAlign: 'center',
+                                    margin: 'auto',
+                                    color: 'red',
+                                    marginTop: '10',
+                                    padding: '5',
+                                    maxWidth: '100%',
+                                    // boxSizing: 'border-box',
+                                    // overflowWrap: 'break-word',
+                                    // wordWrap: 'break-word',
+                                    // hyphens: 'auto',
+                                    // '@media only screen and (max-width: 412px) and (max-height: 883px)': {
+                                    //     fontSize: '1.2em',  // Ajustez la taille de la police pour les écrans de taille spécifique
+                                    //     marginTop: '-1.2em',
+                                    //     padding: '0.3em',  // Ajustez le remplissage pour les écrans de taille spécifique
+                                    // },
+                                }}
+                            >
+                                Tarifs hors commissions agences
+                            </p>
+                            <div style={{ width: '20px' }}></div>
 
 
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <button
                                     style={{
                                         display: 'flex',
@@ -507,7 +529,7 @@ export default function PersistentDrawerLeft() {
                                     </span>
                                     Montant à payer:
                                 </button>
-                            </div>
+                            </div> */}
 
                             <div>
 
@@ -518,13 +540,14 @@ export default function PersistentDrawerLeft() {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
-                                            <th>Date édition</th>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
-                                            <th>Date d'arrivée</th>
-                                            <th>Montant</th>
-                                            <th>Imprimer</th>
+                                            <th>Pays</th>
+                                            <th>Aéroport</th>
+                                            <th>Ville</th>
+                                            <th>Type de véhicule</th>
+                                            <th>Tarif fournisseur</th>
+                                            <th>Aller simple</th>
+                                            <th>Aller-retour</th>
+                                            {/* <th>Action</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>

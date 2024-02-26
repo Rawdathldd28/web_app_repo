@@ -5,7 +5,8 @@ import Navbar from './components/Navbar';
 import Form from './components/Form';
 import Gestion from './components/Gestion'
 import Reservations from './components/Reservations'
-import Nvbar from './components/Nvbar'
+import Table from './components/Table'
+import Tables from './components/Tables'
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="/Reservations" element={< Reservations />} />
           <Route path="/Form" element={< Form />} />
           <Route path="/Gestion" element={< Gestion />} />
+          <Route path="/Table" element={< Table />} />
+          <Route path="/Tables" element={< Tables />} />
         </Routes>
       </Router>
     </>

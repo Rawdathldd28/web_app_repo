@@ -332,9 +332,7 @@ export default function PersistentDrawerLeft() {
                                 <ListItemText primary="Reservations payees" />
                             </ListItemButton>
 
-                            <ListItemButton sx={{ pl: 4 }}
-                                component={Link}
-                                to="/Table">
+                            <ListItemButton sx={{ pl: 4 }}>
                                 <ListItemIcon>
                                     <GoDot />
                                 </ListItemIcon>
@@ -476,13 +474,13 @@ export default function PersistentDrawerLeft() {
                                     padding: '0.3em',  // Ajustez le remplissage pour les écrans de taille spécifique
                                 },
                             }}>
-                                <strong>MES RESERVATIONS DE NAVETTES D'AEROPORT</strong>
+                                <strong>LISTE DES TARIFS DE MISE A DISPOSITION</strong>
                             </p>
 
                             <div style={{ width: '20px' }}></div>
 
 
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <button
                                     style={{
                                         display: 'flex',
@@ -507,7 +505,7 @@ export default function PersistentDrawerLeft() {
                                     </span>
                                     Montant à payer:
                                 </button>
-                            </div>
+                            </div> */}
 
                             <div>
 
@@ -518,13 +516,12 @@ export default function PersistentDrawerLeft() {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
-                                            <th>Date édition</th>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
-                                            <th>Date d'arrivée</th>
-                                            <th>Montant</th>
-                                            <th>Imprimer</th>
+                                            <th>Pays</th>
+                                            <th>Aéroport</th>
+                                            <th>Ville</th>
+                                            <th>Gamme</th>
+                                            <th>Prix fournisseur</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -535,15 +532,15 @@ export default function PersistentDrawerLeft() {
                                                 ))}
                                                 <td>
                                                     <button style={{ backgroundColor: 'blue', color: 'white', borderRadius: '20px', padding: '8px' }}>
-                                                        Aller simple
+                                                        Réserver
                                                     </button>
                                                 </td>
-                                                <td>
+                                                {/* <td>
                                                     <button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '20px', padding: '8px' }}>
                                                         Aller-retour
                                                     </button>
                                                 </td>
-                                                {/* <td>
+                                                <td>
                                                     <button style={{ backgroundColor: 'black', color: 'white', borderRadius: '20px', padding: '8px' }}
                                                         onClick={() => handleRowDelete(index)}>Supprimer </button>
                                                 </td> */}

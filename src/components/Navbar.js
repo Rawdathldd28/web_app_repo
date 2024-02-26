@@ -290,7 +290,7 @@ export default function PersistentDrawerLeft() {
                 </ListItemIcon>
                 <ListItemText primary="Mes réservations" />
               </ListItemButton>
-            
+
               <ListItemButton
                 sx={{ pl: 4 }}
                 component={Link}
@@ -301,7 +301,10 @@ export default function PersistentDrawerLeft() {
                 <ListItemText primary="Reservations payees" />
               </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/Table">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
@@ -321,11 +324,13 @@ export default function PersistentDrawerLeft() {
           </ListItemButton>
           <Collapse in={openMail} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={{ pl: 4 }}
+                component={Link}
+                to="/Tables">
                 <ListItemIcon>
                   <GoDot />
                 </ListItemIcon>
-                <ListItemText primary="Starred" />
+                <ListItemText primary="Réservations" />
               </ListItemButton>
 
               <ListItemButton sx={{ pl: 4 }}>
@@ -368,7 +373,6 @@ export default function PersistentDrawerLeft() {
                 </ListItemIcon>
                 <ListItemText primary="Starred" />
               </ListItemButton>
-
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <GoDot />
